@@ -6,7 +6,7 @@ module Api
 
       def index
         @reports = Report.all
-        render json: @reports
+        render json: @reports, root: false
       end
 
       def create

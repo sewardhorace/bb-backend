@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215042010) do
+ActiveRecord::Schema.define(version: 20160112015953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,14 +19,16 @@ ActiveRecord::Schema.define(version: 20151215042010) do
   create_table "reports", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.string   "tags",                     array: true
+    t.string   "tags",                           array: true
     t.datetime "time"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "room_id"
+    t.integer  "student_report_id"
   end
 
   add_index "reports", ["room_id"], name: "index_reports_on_room_id", using: :btree
+  add_index "reports", ["student_report_id"], name: "index_reports_on_student_report_id", using: :btree
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name"
@@ -49,13 +51,17 @@ ActiveRecord::Schema.define(version: 20151215042010) do
     t.string   "name"
     t.date     "dob"
     t.json     "contacts"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "room_id"
+    t.integer  "student_report_id"
   end
 
   add_index "students", ["room_id"], name: "index_students_on_room_id", using: :btree
+  add_index "students", ["student_report_id"], name: "index_students_on_student_report_id", using: :btree
 
   add_foreign_key "reports", "rooms"
+  add_foreign_key "reports", "student_reports"
   add_foreign_key "students", "rooms"
+  add_foreign_key "students", "student_reports"
 end
