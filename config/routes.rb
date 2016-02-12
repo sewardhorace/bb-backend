@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
 
-  namespace :api do
+  devise_for :users
+  namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get '/reports', to: 'reports#index'
       post '/reports', to: 'reports#create'
       delete '/reports/:id', to: 'reports#destroy'
+
+      get '/users/:id', to: 'users#show'
+      post '/users', to: 'users#create'
+      put '/users/:id', to: 'users#update'
+      delete '/users/:id', to: 'users#destroy'
+
+      post '/sessions', to: 'sessions#create'
+      delete '/sessions/:id', to: 'sessions#destroy'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
