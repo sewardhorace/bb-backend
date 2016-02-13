@@ -8,6 +8,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def create
     user = User.new(user_params)
+    user.generate_authentication_token!
     if user.save
       render json: user, status: 201#, location: [:api, user]
     else

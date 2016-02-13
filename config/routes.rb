@@ -9,8 +9,8 @@ Rails.application.routes.draw do
 
       get '/users/:id', to: 'users#show'
       post '/users', to: 'users#create'
-      put '/users/:id', to: 'users#update'
-      delete '/users/:id', to: 'users#destroy'
+      put '/users', to: 'users#update'
+      delete '/users', to: 'users#destroy'
 
       post '/sessions', to: 'sessions#create'
       delete '/sessions/:id', to: 'sessions#destroy'
