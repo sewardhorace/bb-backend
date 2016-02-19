@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213154442) do
+ActiveRecord::Schema.define(version: 20160219000414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160213154442) do
   create_table "reports", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.string   "tags",              array: true
+    t.string   "tags",                           array: true
     t.datetime "time"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
@@ -76,11 +76,13 @@ ActiveRecord::Schema.define(version: 20160213154442) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "auth_token",             default: ""
+    t.string   "username"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   add_foreign_key "reports", "rooms"
   add_foreign_key "reports", "student_reports"
