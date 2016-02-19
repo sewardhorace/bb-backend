@@ -38,6 +38,7 @@ class Api::V1::ReportsController < Api::V1::ApiController
 
   private
   def report_params
+    puts params
     params.require(:report).permit(:title, :description, :room_id, :time, :students => [:id])
   end
 end
