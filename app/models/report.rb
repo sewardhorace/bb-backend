@@ -9,6 +9,9 @@ class Report < ActiveRecord::Base
       report = Report.new()
       report.title = params["title"]
       report.description = params["description"]
+      if room_id = params["room_id"]
+        report.room_id = room_id
+      end
       if time = params["time"]
         report.time = DateTime.parse(time)
       end
