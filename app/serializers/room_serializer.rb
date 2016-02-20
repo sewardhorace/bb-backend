@@ -1,3 +1,3 @@
 class RoomSerializer < ActiveModel::Serializer
-  attributes :name, :hex_color
+  attributes :id, :name, :hex_color
 end
