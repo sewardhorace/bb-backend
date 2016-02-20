@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
       post '/sessions', to: 'sessions#create'
       delete '/sessions/:id', to: 'sessions#destroy'
+
+      get '/rooms', to: 'rooms#index'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
