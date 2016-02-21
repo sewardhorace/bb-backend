@@ -4,7 +4,19 @@ class Api::V1::StudentsController < Api::V1::ApiController
   # TODO csrf token
 
   def index
-    students = Student.all
+    if id = params[:room_id]
+      students = Student.roomFilter(id)
+    else
+      students = Student.all
+    end
+    query = params[:search_string] || ""
+    students = students.search(query)
     render json: students, root: false
+  end
+
+  private
+  def search_params
+    puts params
+    params.permit(:room_id, :search_string)
   end
 end

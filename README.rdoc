@@ -5,6 +5,6 @@ Facilitate communication about student incidents between employees across shifts
 Todo:
 
 endpoints for:
-  rooms
-  students
+  X rooms
+  X students
   tags(?)
