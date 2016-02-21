@@ -20,7 +20,7 @@ class Report < ActiveRecord::Base
         if params["students"]
           StudentReport.transaction do
             params["students"].each do |s|
-              unless (Student.exists?(s["id"]) && StudentReport.create(report_id: report.id, student_id: s["id"]))
+              unless (id = s["id"] && Student.exists?(id) && StudentReport.create(report_id: report.id, student_id: id))
                 ActiveRecord::Rollback
                 return false
               end

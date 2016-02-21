@@ -4,6 +4,7 @@ Facilitate communication about student incidents between employees across shifts
 
 Todo:
 
+remove student_report_id field from student table
 endpoints for:
   X rooms
   X students

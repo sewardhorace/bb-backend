@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
       get '/rooms', to: 'rooms#index'
 
-      get '/students', to: 'students#index'
+      get '/students', to: 'students#search'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
