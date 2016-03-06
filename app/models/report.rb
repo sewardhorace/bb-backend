@@ -5,6 +5,9 @@ class Report < ActiveRecord::Base
   has_many :students, through: :student_reports
 
   def self.newReportFromParams(params, user)
+    puts "***" * 100
+    puts params
+    puts "***" * 100
     Report.transaction do
       report = Report.new()
       report.title = params["title"]
@@ -16,17 +19,12 @@ class Report < ActiveRecord::Base
         report.time = DateTime.parse(time)
       end
       report.user_id = user.id
+
       if report.save
-        if params["students"]
-          StudentReport.transaction do
-            params["students"].each do |s|
-              unless (id = s["id"] && Student.exists?(id) && StudentReport.create(report_id: report.id, student_id: id))
-                ActiveRecord::Rollback
-                return false
-              end
-            end
-          end
-        end
+        puts "***" * 100
+        puts params["students"]
+        puts "***" * 100
+        StudentReport.createFromStudentIds(params["students"], report.id)
         return report
       else
         raise ActiveRecord::Rollback

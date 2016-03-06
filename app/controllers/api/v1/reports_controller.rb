@@ -10,7 +10,6 @@ class Api::V1::ReportsController < Api::V1::ApiController
   end
 
   def create
-    #need reference to room, students (& student_report), user (author)
     if report = Report.newReportFromParams(report_params, current_user)
       render json: report, status: 201
     else
