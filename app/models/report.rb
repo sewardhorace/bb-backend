@@ -1,7 +1,7 @@
 class Report < ActiveRecord::Base
   belongs_to :user
   belongs_to :room
-  has_many :student_reports
+  has_many :student_reports, dependent: :destroy
   has_many :students, through: :student_reports
 
   def self.newReportFromParams(params, user)
