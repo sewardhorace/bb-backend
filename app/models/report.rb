@@ -3,6 +3,9 @@ class Report < ActiveRecord::Base
   belongs_to :room
   has_many :student_reports, dependent: :destroy
   has_many :students, through: :student_reports
+  validates :title, presence: true
+  validates :user_id, presence: true
+  validates :time, presence: true
 
   def self.newReportFromParams(params, user)
     puts "***" * 100
