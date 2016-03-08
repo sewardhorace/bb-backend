@@ -9,3 +9,7 @@ endpoints for:
   X rooms
   X students
   tags(?)
+
+endpoints to update and destroy reports
+admin endpoints?
+change report description to type text instead of string?

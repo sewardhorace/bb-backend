@@ -7,10 +7,11 @@ class Report < ActiveRecord::Base
   validates :user_id, presence: true
   validates :time, presence: true
 
+  def self.search(queryString)
+    where("title ilike ? OR description ilike ?", "%#{queryString}%", "%#{queryString}%")
+  end
+
   def self.newReportFromParams(params, user)
-    puts "***" * 100
-    puts params
-    puts "***" * 100
     Report.transaction do
       report = Report.new()
       report.title = params["title"]
@@ -24,9 +25,6 @@ class Report < ActiveRecord::Base
       report.user_id = user.id
 
       if report.save
-        puts "***" * 100
-        puts params["students"]
-        puts "***" * 100
         StudentReport.createFromStudentIds(params["students"], report.id)
         return report
       else

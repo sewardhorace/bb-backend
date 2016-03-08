@@ -6,8 +6,18 @@ class Api::V1::ReportsController < Api::V1::ApiController
 
   def index
     reports = Report.all
+    if query = search_params[:query_string]
+      reports = reports.search(query)
+    end
     render json: reports, root: false
   end
+
+  # def search
+  #   reports = Report.all
+  #   query = search_params[:query_string] || ""
+  #   reports = reports.search(query)
+  #   render json: reports, root: false
+  # end
 
   def create
     if report = Report.newReportFromParams(report_params, current_user)
@@ -37,7 +47,10 @@ class Api::V1::ReportsController < Api::V1::ApiController
 
   private
   def report_params
-    puts params
     params.require(:report).permit(:title, :description, :room_id, :time, :students => [:id])
+  end
+
+  def search_params
+    params.permit(:query_string)
   end
 end

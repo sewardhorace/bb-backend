@@ -16,8 +16,6 @@ class Api::V1::StudentsController < Api::V1::ApiController
 
   private
   def search_params
-    puts "***" * 50
-    puts params
     params.permit(:room_id, :query_string)
   end
 end
