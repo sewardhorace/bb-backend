@@ -1,6 +1,9 @@
 
 class Api::V1::SessionsController < Api::V1::ApiController
   def create
+    puts "***" * 100
+    puts params
+    puts "***" * 100
     user_password = params[:session][:password]
     username = params[:session][:username]
     user = username.present? && User.find_by(username: username)

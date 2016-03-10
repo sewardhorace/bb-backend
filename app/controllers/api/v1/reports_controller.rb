@@ -12,12 +12,6 @@ class Api::V1::ReportsController < Api::V1::ApiController
     render json: reports, root: false
   end
 
-  # def search
-  #   reports = Report.all
-  #   query = search_params[:query_string] || ""
-  #   reports = reports.search(query)
-  #   render json: reports, root: false
-  # end
 
   def create
     if report = Report.newReportFromParams(report_params, current_user)
