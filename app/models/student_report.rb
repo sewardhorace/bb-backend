@@ -2,16 +2,21 @@ class StudentReport < ActiveRecord::Base
   belongs_to :student
   belongs_to :report
 
-  def self.createFromStudentIds(students, report_id)
-    if students
-      students.each do |s|
-        id = s["id"]
-        if Student.exists?(id)
-          self.create(report_id: report_id, student_id: id)
-        end
+  def self.createFromStudentIds(ids, report_id)
+    ids.each do |id|
+      if Student.exists?(id)
+        self.create(report_id: report_id, student_id: id)
+      else
+        return false
       end
-    else
-      return false
+    end
+    return true
+  end
+
+  def self.destroyFromStudentIds(ids, report_id)
+    ids.each do |id|
+      StudentReport.find_by(student_id: id, report_id: report_id).destroy
     end
   end
+
 end

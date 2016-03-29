@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/reports', to: 'reports#index'
       post '/reports', to: 'reports#create'
+      put '/reports/:id', to: 'reports#update'
       delete '/reports/:id', to: 'reports#destroy'
 
       get '/users/:id', to: 'users#show'

@@ -24,9 +24,8 @@ class Api::V1::ReportsController < Api::V1::ApiController
 
   def update
     report = Report.find(params[:id])
-
     #TODO not up to date
-    if report.update(report_params)
+    if report.updateReportFromParams(report_params)
       head :ok
     else
       head :bad_request

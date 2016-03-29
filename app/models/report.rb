@@ -25,12 +25,43 @@ class Report < ActiveRecord::Base
       report.user_id = user.id
 
       if report.save
-        StudentReport.createFromStudentIds(params["students"], report.id)
+        if params["students"]
+          studentIds = params["students"].collect { |s| s["id"] }
+        else studentIds = nil
+        end
+        StudentReport.createFromStudentIds(studentIds, report.id)
         return report
       else
         raise ActiveRecord::Rollback
         return false
       end
     end
+  end
+
+  def updateReportFromParams(params)
+    puts "***" * 100
+    puts params
+    puts "***" * 100
+    Report.transaction do
+      students = params.delete("students")
+      if self.update(params)
+        if self.updateStudents(students)
+          return self
+        else
+          raise ActiveRecord::Rollback
+        end
+      else
+        return false
+      end
+    end
+  end
+
+  def updateStudents(students)
+    current = self.students.collect { |s| s.id }
+    updated = students.collect { |s| s["id"] }
+    toDelete = current - updated
+    toAdd = updated - current
+    if !StudentReport.destroyFromStudentIds(toDelete, self.id) || !StudentReport.createFromStudentIds(toAdd, self.id) then return false end
+    return true
   end
 end

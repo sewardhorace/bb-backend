@@ -1,9 +1,6 @@
 
 class Api::V1::SessionsController < Api::V1::ApiController
   def create
-    puts "***" * 100
-    puts params
-    puts "***" * 100
     user_password = params[:session][:password]
     username = params[:session][:username]
     user = username.present? && User.find_by(username: username)
@@ -12,7 +9,13 @@ class Api::V1::SessionsController < Api::V1::ApiController
       sign_in user, store: false
       user.generate_authentication_token!
       user.save
-      render json: user, status: 200#, location: [:api, user]
+      render json: {
+        user: {
+          id: user.id,
+          username: user.username,
+          auth_token: user.auth_token
+        }
+      }, status: 200
     else
       render json: { errors: "Invalid username or password" }, status: 422
     end
